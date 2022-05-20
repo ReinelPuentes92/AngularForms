@@ -1,0 +1,64 @@
+<h2>Template: <small>Dinamicos</small></h2>
+<hr>
+
+<form (ngSubmit)="save()" 
+      #myForm="ngForm"
+      autocomplete="off">
+
+    <!--Name person-->
+    <div class="mb-3 row">
+        <label class="col-sm-3 col-form-label">Name: </label>
+        <div class="col-sm-9">
+            <input class="form-control" placeholder="Name Person" 
+                [ngModel] = "person.name"
+                name="name"   
+                required/>
+            <span class="form-text text-danger" *ngIf="myForm.controls.name?.errors && myForm.controls.name?.touched">
+                This field is required.
+            </span>
+        </div>
+    </div>
+
+    <!--Add video game-->
+    <div class="mb-3 row">
+        <label class="col-sm-3 col-form-label">Game: </label>
+        <div class="col-sm-9">
+            <div class="input-group">
+                <input class="form-control"
+                 [(ngModel)]="newGame"
+                 (keyup.enter)="addGame()"
+                 name="newGame"
+                 placeholder="Add Favorite"/>
+                <button class="btn btn-outline-primary" type="button" (click)="addGame()">Add</button>
+            </div>
+        </div>
+    </div>
+
+    <!--List to video games favorites-->
+    <div class="mb-3 row">
+        <label class="col-sm-3 col-form-label">Favorites: </label>
+        <div class="col-sm-9">
+            <div class="input-group mb-1" *ngFor="let item of person.favorities; let i = index">
+                <input class="form-control"  
+                    [(ngModel)]="item.nameGame"
+                    name="favorite_{{i}}"
+                    required/>
+                <button class="btn btn-outline-danger" type="button" (click)="trash(i)">Delete</button>
+            </div>            
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <button type="button" class="btn btn-primary float-end"
+                    [disabled]="myForm.invalid"
+                    (click)="save()">
+                Save
+            </button>
+        </div>
+    </div>
+
+</form>
+
+<span>Person Data</span>
+<pre>{{person | json}}</pre>

@@ -1,0 +1,91 @@
+<h2>Template: Basics</h2>
+<hr>
+
+<div class="row">
+
+    <div class="col">
+
+        <form (ngSubmit)="save()" 
+              #myTemplate="ngForm"
+              autocomplete="off">
+
+            <!-- Field Product -->
+            <div class="mb-3 row">
+                <label class="col-sm-3 col-form-label">Product</label>
+                <div class="col-sm-9">
+                    <input type="text" 
+                           class="form-control" 
+                           [ngModel] = "initForm.product"
+                           name="product"
+                           placeholder="Name Product"
+                           required
+                           minlength="3">
+
+                   <span class="form-text text-danger"
+                         *ngIf="nameValid()">
+                          Must be three letters </span>
+                </div>                
+            </div>
+
+            <!-- Field Price -->
+            <div class="mb-3 row">
+                <label class="col-sm-3 col-form-label">Price</label>
+                <div class="col-sm-9">
+                    <input type="number" 
+                           class="form-control" 
+                           [ngModel] = "initForm.price"
+                           name="price"
+                           placeholder="Price Product"
+                           required>     
+                           
+                    <span class="form-text text-danger"
+                          *ngIf="priceValid()">
+                          Must be greather than 0 </span>
+                </div>                
+            </div>
+
+            <!-- Field Stock -->
+            <div class="mb-3 row">
+                <label class="col-sm-3 col-form-label">Stock</label>
+                <div class="col-sm-9">
+                    <input type="number" 
+                           class="form-control" 
+                           [ngModel] = "initForm.stock"
+                           name="stock"
+                           placeholder="Stock Product"
+                           customMin
+                           [minimo] = '0'
+                           required>                    
+                </div>                
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <button type="submit" [disabled]="myTemplate.invalid" class="btn btn-primary float-end">Save</button>
+                </div>
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+<div class="row">
+    <div class="col">
+        <span>valid</span>
+        <pre>{{myTemplate.valid | json}}</pre>
+
+        <span>Pristine</span>
+        <pre>{{myTemplate.pristine | json}}</pre>
+
+        <span>Touched</span>
+        <pre>{{myTemplate.touched | json}}</pre>
+
+        <span>value</span>
+        <pre>{{myTemplate.value | json}}</pre>
+
+        <span>CustomDirective</span>
+        <pre>{{myTemplate.controls.stock?.errors | json}}</pre>
+    </div>
+</div>
