@@ -1,1 +1,73 @@
-<p>dinamics works!</p>
+<h2>Template: <small>Dinamicos</small></h2>
+<hr>
+
+<form [formGroup]="myTemplate" (ngSubmit)="save()" autocomplete="off">
+
+    <!--Name person-->
+    <div class="mb-3 row">
+        <label class="col-sm-3 col-form-label">Name: </label>
+        <div class="col-sm-9">
+            <input class="form-control" 
+                   formControlName="name"
+                   placeholder="Name Person"                 
+                   required/>
+            <span class="form-text text-danger"
+                  *ngIf="validarCampo('name')">
+                This field is required.
+            </span>
+        </div>
+    </div>
+
+    <!--Add video game-->
+    <div class="mb-3 row">
+        <label class="col-sm-3 col-form-label">Game: </label>
+        <div class="col-sm-9">
+            <div class="input-group">
+                <input class="form-control" 
+                [formControl]="newFavoritie"                                                
+                placeholder="Add Favorite"
+                (keyup.enter)="addFavorite()"/>
+
+                <button class="btn btn-outline-primary" type="button" (click)="addFavorite()">Add</button>
+            </div>
+        </div>
+    </div>
+
+    <!--List to video games favorites-->
+    <div class="mb-3 row">
+        <label class="col-sm-3 col-form-label">Favorites: </label>
+        <div class="col-sm-9" formArrayName="favorities">
+            <div class="input-group mb-1"
+                 *ngFor="let item of favoritiesArr.controls; let i = index">
+                <input class="form-control"                                          
+                       [formControlName]="i"/>
+                <button class="btn btn-outline-danger" type="button" (click)="deleteFavorite(i)">Delete</button>
+            </div>            
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <button type="submit" class="btn btn-primary float-end">
+                Save
+            </button>
+        </div>
+    </div>
+
+</form>
+
+
+<span>Valid</span>
+<pre>{{myTemplate.valid}}</pre>
+<br>
+
+<span>Value</span>
+<pre>{{myTemplate.value | json}}</pre>
+<br>
+
+<span>Add Game</span>
+<pre>{{newFavoritie.valid}}</pre>
+<pre>{{newFavoritie.value}}</pre>
+<br>
+
+
